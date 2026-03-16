@@ -1,45 +1,46 @@
-# JO Universal File Editor — Single File Edition
+# JO Universal File Editor — Single File Modal Edition
 
-This ZIP contains a **single-file PHP version** of the JO Universal File Editor.
+This package contains a **single-file PHP application** named `index.php`.
+
+It refactors the Universal File Editor single-page version so that all dashboard menu options now work through **modal popups**:
+
+- Dashboard
+- Upload File
+- Editor Workspace
+- Preview Panel
+- Version History
+- File Metadata
+- Settings
+- Help / Supported Formats
+
+## What changed
+
+The left dashboard navigation no longer relies on separate pages or inline sections for these tools. Each option opens a Bootstrap modal and performs its function there.
 
 ## Included files
 
-- `index.php` — the complete one-file application
-- `README.md` — setup and usage notes
+- `index.php` — the full single-file PHP application
+- `README.md` — this setup guide
 
-## What this single-file edition supports
+## Features in this single-file edition
 
-The app provides one unified editor shell with internal file-type-specific modes:
-
-- Text files: `.txt`, `.md`, `.csv`, `.json`, `.xml`
-- Word files: `.docx` with practical paragraph-based editing
-- Legacy `.doc`: restricted, with clear UI notice
-- SVG: raw markup editing + live preview
-- JPG / JPEG / PNG: browser-assisted rotate / flip / brightness / contrast
-- PDF: preview + text extraction workflow
-- EXE: safe inspection-only mode
-
-## Main features
-
-- Upload file
+- PHP 8+ single-file architecture
+- Upload and storage handling
 - File explorer / recent files
-- Editor workspace
-- Preview panel
-- File metadata
-- Version history
-- Download current file
-- Restore previous version
-- Audit log
-- Drag-and-drop upload
-- Monaco editor for text-like formats
-- JO-branded UI:
-  - black background
-  - white text
-  - green action buttons
+- Text editor workflow
+- DOCX practical paragraph editing workflow
+- Live SVG preview
+- Image preview with rotate / flip / brightness / contrast
+- PDF preview + text extraction
+- EXE inspection-only metadata mode
+- Version history and restore
+- Audit logging
+- Modal-based dashboard functions
+- JO-branded UI
 
-## Storage structure
+## Storage layout
 
-When you first run `index.php`, it creates:
+When `index.php` runs, it creates the following folders next to itself:
 
 ```text
 /storage
@@ -49,22 +50,16 @@ When you first run `index.php`, it creates:
   /logs
 ```
 
-### Meaning
-
-- `storage/originals` — uploaded working files
-- `storage/versions` — timestamped save versions
-- `storage/temp` — reserved temp area
-- `storage/logs/audit.log` — audit trail
-
 ## Requirements
 
 - PHP 8+
-- `ZipArchive` enabled for `.docx` workflow
-- writable directory for `storage/`
+- Apache, Nginx, or PHP built-in server
+- `ZipArchive` enabled for DOCX practical editing support
+- `fileinfo` enabled for MIME detection
 
 ## Run locally
 
-### Option 1 — PHP built-in server
+From the folder containing `index.php`:
 
 ```bash
 php -S localhost:8000
@@ -76,77 +71,60 @@ Then open:
 http://localhost:8000/index.php
 ```
 
-### Option 2 — Apache / Nginx
-Place `index.php` in your web root and browse to it normally.
+## How the modal workflow behaves
 
-## Important limitations
+### Dashboard Modal
+Shows overview cards and current system state.
 
-### DOC / DOCX
-- `.docx` is supported with a practical text-based workflow
-- `.doc` binary editing is **not** fully supported
-- the UI clearly tells the user to convert `.doc` to `.docx`
+### Upload File Modal
+Supports file upload and drag-and-drop.
+
+### Editor Workspace Modal
+Shows the correct editor shell for the selected file type.
+
+### Preview Panel Modal
+Shows file preview when available.
+
+### Version History Modal
+Shows timestamped versions and allows restore.
+
+### File Metadata Modal
+Shows file size, type, MIME, and adapter-specific metadata.
+
+### Settings Modal
+Shows runtime and security notes.
+
+### Help / Supported Formats Modal
+Shows file-type support and editing limitations.
+
+## Supported file types
+
+- DOC / DOCX
+- TXT / MD / CSV / JSON / XML
+- SVG
+- JPG / JPEG / PNG
+- PDF
+- EXE
+
+## Important safe limitations
+
+### DOC
+Legacy `.doc` editing is restricted. Convert to `.docx` for practical editing.
 
 ### PDF
-- full arbitrary paragraph editing is **not** supported
-- current workflow supports:
-  - preview
-  - extraction
-  - safe extension path for annotation / overlay / stamping
+This version supports preview + extraction workflows, not arbitrary paragraph rewriting.
 
 ### EXE
-- inspection only
-- hashes and header info are shown
-- uploaded binaries are never executed
-- no freeform binary editing is provided
+EXE handling is inspection-only. Uploaded binaries are never executed.
 
-### Images
-- this edition uses browser-assisted adjustment and save-back
-- crop and watermark can be added later, but rotate / flip / brightness / contrast are included as a practical starter
+## Notes
 
-## Security notes
+This is a **single-file practical starter**. It is designed to be understandable and portable, while still preserving the main universal editor workflow in one PHP file.
 
-- file extension validation
-- file size limit: 25MB
-- uploaded files stored outside direct application logic folders
-- CSRF protection on save / restore / upload
-- audit logging on upload / save / version / restore
-- EXE files are never executed
+## Footer branding
 
-## Versioning
-
-Every save creates a timestamped copy in:
+The UI includes:
 
 ```text
-storage/versions/{fileId}/
+Another Website by Julius Olatokunbo
 ```
-
-You can restore older versions from the right-hand version history panel.
-
-## Branding
-
-Title:
-`JO Universal File Editor`
-
-Footer:
-`Another Website by Julius Olatokunbo`
-
-## Suggested future upgrades
-
-- richer PDF annotation tools
-- true image crop / watermark UI
-- advanced DOCX structure extraction
-- private login / role-based access
-- multi-user audit labels
-- thumbnail generation
-- metadata editing for PDFs
-- icon/resource replacement sandbox for EXE inspection workflows
-
-## Summary
-
-This ZIP is the **single-file refactor** of the larger multi-file project:
-
-- one `index.php`
-- one `README.md`
-- browser-based file workbench
-- unified shell
-- file-specific safe workflows
